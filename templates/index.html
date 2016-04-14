@@ -22,7 +22,10 @@
     {% endfor %}
 </section>
 <section id="contact">
-    {% bootstrap_form contact_form %}
+    <form method="POST" action="{% url 'contact' %}">{% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit">
+    </form>
 </section>
 </body>
 </html>

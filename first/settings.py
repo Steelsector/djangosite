@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import dj_database_url
+import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -87,6 +88,11 @@ DATABASES = {
 
 DATABASES['default'].update(dbfromenv)
 
+
+EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
+MAILGUN_ACCESS_KEY = os.environ.get('MAILGUN_API_KEY', '')
+MAILGUN_SERVER_NAME = os.environ.get('MAILGUN_DOMAIN', '')
+
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
@@ -129,4 +135,18 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
+if TESTING:
+    PASSWORD_HASHERS = {'django.contrib.auth.hashers.MD5PasswordHasher'}
+    DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
+    EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
+HEROKU = True if 'DYNO' in os.environ else False
+if HEROKU:
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

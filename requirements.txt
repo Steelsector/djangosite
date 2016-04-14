@@ -5,3 +5,4 @@ django==1.9.5
 gunicorn
 psycopg2
 whitenoise
+django-mailgun

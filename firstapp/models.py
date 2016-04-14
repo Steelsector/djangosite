@@ -7,8 +7,15 @@ class Skill(models.Model):
     name = models.CharField(max_length=255)
     rate = models.IntegerField()
 
+    def __unicode__(self):
+        return '%s (%s)' % (self.name, self.rate)
 
-class Projects(models.Model):
+
+class Project(models.Model):
     name = models.CharField(max_length=255)
-    technologies = models.CharField(max_length=255)
+    technologies = models.ManyToManyField(Skill)
     photo = models.ImageField(upload_to='projects')
+
+    class Meta:
+        verbose_name = 'Project'
+        verbose_name_plural = 'Projects'
