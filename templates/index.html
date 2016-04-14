@@ -1,0 +1,28 @@
+{% load staticfiles bootstrap3 %}
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"
+            integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/base.js' %}"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav>
+
+</nav>
+<section id="projects">
+    {% for object in projects %}
+        {{ object.name }} - {{ object.technologies }} - <img src="{{ MEDIA_URL }}{{ object.photo }}"> <br>
+    {% endfor %}
+</section>
+<section id="skills">
+    {% for object in object_list %}
+        {{ object.name }} - {{ object.rate }} <br>
+    {% endfor %}
+</section>
+<section id="contact">
+    {% bootstrap_form contact_form %}
+</section>
+</body>
+</html>
