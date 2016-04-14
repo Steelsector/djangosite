@@ -1,2 +1,7 @@
 django-bootstrap3
 pillow
+dj-database-url==0.4.0
+django==1.9.5
+gunicorn
+psycopg2
+whitenoise
