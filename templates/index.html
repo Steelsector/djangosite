@@ -27,7 +27,22 @@
                 {% for object in projects %}
                     {% if object.linkto != 'SOME STRING'  and object.linkto != 'http://someString.com' %}
                         <div class="col-xs-12 col-sm-4 col-md-4">
-                            <a href="{{ object.linkto }}">
+                            <div class="grid wow zoomIn">
+                                <a href="{{ object.linkto }}">
+                                    <figure class="effect-bubba">
+                                        <img src="{{ MEDIA_URL }}{{ object.photo }}"/>
+                                        <figcaption>
+                                            <h2><span>{{ object.name }}</span></h2>
+                                            <p>{% for skill in object.technologies.all %}{{ skill.name }}
+                                                , {% endfor %}</p>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <div class="grid wow zoomIn">
                                 <figure class="effect-bubba">
                                     <img src="{{ MEDIA_URL }}{{ object.photo }}"/>
                                     <figcaption>
@@ -35,17 +50,7 @@
                                         <p>{% for skill in object.technologies.all %}{{ skill.name }}, {% endfor %}</p>
                                     </figcaption>
                                 </figure>
-                            </a>
-                        </div>
-                    {% else %}
-                        <div class="col-xs-12 col-sm-4 col-md-4">
-                            <figure class="effect-bubba">
-                                <img src="{{ MEDIA_URL }}{{ object.photo }}"/>
-                                <figcaption>
-                                    <h2>{{ object.name }}</h2>
-                                    <p>{% for skill in object.technologies.all %}{{ skill.name }}, {% endfor %}</p>
-                                </figcaption>
-                            </figure>
+                            </div>
                         </div>
                     {% endif %}
                 {% endfor %}
