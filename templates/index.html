@@ -25,7 +25,7 @@
             <div class="row">
 
                 {% for object in projects %}
-                    {% if object.linkto != 'SOME STRING' %}
+                    {% if object.linkto != 'SOME STRING'  and object.linkto != 'http://someString.com' %}
                         <div class="col-xs-12 col-sm-4 col-md-4">
                             <a href="{{ object.linkto }}">
                                 <figure class="effect-bubba">
