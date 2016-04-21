@@ -1,9 +1,8 @@
 # coding=utf-8
-from django.core.mail import send_mail
 from django.core.urlresolvers import reverse_lazy
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from django.views.generic import ListView, FormView
+from django.views.generic import ListView, FormView, DetailView
 from django.core.mail import EmailMultiAlternatives
 from firstapp.forms import Contact
 from firstapp.models import Skill
@@ -20,6 +19,11 @@ class Home(ListView):
         context['projects'] = Project.objects.all()
         context['form'] = Contact(self.request.POST or None)
         return context
+
+
+class ProjectDetail(DetailView):
+    template_name = 'project.html'
+    model = Project
 
 
 class ContactMe(FormView):
@@ -39,4 +43,3 @@ class ContactMe(FormView):
         msg.attach_alternative(html_content, 'text/html')
         msg.send()
         return super(ContactMe, self).form_valid(form)
-

@@ -1,31 +1,143 @@
+{% extends 'base.html' %}
 {% load staticfiles bootstrap3 %}
-<html>
-<head>
-    <script src="https://code.jquery.com/jquery-2.2.3.min.js"
-            integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
-    <script src="{% static 'js/base.js' %}"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
-<body>
-<nav>
+{% block content %}
 
-</nav>
-<section id="projects">
-    {% for object in projects %}
-        {{ object.name }} - {{ object.technologies }} - <img src="{{ MEDIA_URL }}{{ object.photo }}"> <br>
-    {% endfor %}
-</section>
-<section id="skills">
-    {% for object in object_list %}
-        {{ object.name }} - {{ object.rate }} <br>
-    {% endfor %}
-</section>
-<section id="contact">
-    <form method="POST" action="{% url 'contact' %}">{% csrf_token %}
-        {% bootstrap_form form %}
-        <input type="submit">
-    </form>
-</section>
-</body>
-</html>
+    <section id="portfolio" class="pfblock">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-6 col-sm-offset-3">
+
+                    <div class="pfblock-header wow fadeInUp">
+                        <h2 class="pfblock-title">My works</h2>
+                        <div class="pfblock-line"></div>
+                        <div class="pfblock-subtitle">
+                            I am looking forward to developing my skills, making not just websites, but web
+                            applications.
+                        </div>
+                    </div>
+
+                </div>
+
+            </div><!-- .row -->
+
+
+            <div class="row">
+
+                {% for object in projects %}
+                    {% if object.linkto != 'SOME STRING' %}
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <a href="{{ object.linkto }}">
+                                <figure class="effect-bubba">
+                                    <img src="{{ MEDIA_URL }}{{ object.photo }}"/>
+                                    <figcaption>
+                                        <h2>{{ object.name }}</h2>
+                                        <p>{% for skill in object.technologies.all %}{{ skill.name }}, {% endfor %}</p>
+                                    </figcaption>
+                                </figure>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <figure class="effect-bubba">
+                                <img src="{{ MEDIA_URL }}{{ object.photo }}"/>
+                                <figcaption>
+                                    <h2>{{ object.name }}</h2>
+                                    <p>{% for skill in object.technologies.all %}{{ skill.name }}, {% endfor %}</p>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+
+            </div>
+
+
+        </div><!-- .contaier -->
+
+    </section>
+
+    <!-- Portfolio end -->
+
+    <!-- Skills start -->
+
+    <section class="pfblock pfblock-gray" id="skills">
+
+        <div class="container">
+
+            <div class="row skills">
+
+                <div class="row">
+
+                    <div class="col-sm-6 col-sm-offset-3">
+
+                        <div class="pfblock-header wow fadeInUp">
+                            <h2 class="pfblock-title">My Skills</h2>
+                            <div class="pfblock-line"></div>
+                            <div class="pfblock-subtitle">
+                                I am passionate and enthusiastic for new and emerging web technologies.
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div><!-- .row -->
+                {% for object in object_list %}
+                    <div class="col-sm-6 col-md-3 text-center">
+                        <span data-percent="{{ object.rate }}" class="chart easyPieChart"
+                              style="width: 140px; height: 140px; line-height: 140px;">
+                            <span class="percent">{{ object.rate }}</span>
+                        </span>
+                        <h3 class="text-center">{{ object.name }}</h3>
+                    </div>
+                {% endfor %}
+
+            </div><!--End row -->
+
+        </div>
+
+    </section>
+
+    <!-- Skills end -->
+
+    <!-- Contact start -->
+
+    <section id="contact" class="pfblock">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-6 col-sm-offset-3">
+
+                    <div class="pfblock-header">
+                        <h2 class="pfblock-title">Drop me a line</h2>
+                        <div class="pfblock-line"></div>
+                        <div class="pfblock-subtitle">
+                            If you have any question feel free to contact me!
+                        </div>
+                    </div>
+
+                </div>
+
+            </div><!-- .row -->
+
+            <div class="row">
+
+                <div class="col-sm-6 col-sm-offset-3">
+
+                    <form id="contact-form" role="form" method="POST" action="{% url 'contact' %}">{% csrf_token %}
+                        <div class="ajax-hidden">
+                            {% bootstrap_form form %}
+                            <input type="submit" class="btn btn-lg btn-block wow fadeInUp" data-wow-delay=".3s">
+                        </div>
+                        <div class="ajax-response"></div>
+                    </form>
+
+                </div>
+
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </section>
+
+    <!-- Contact end -->
+{% endblock %}

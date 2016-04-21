@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+    {{ object.name }}<br/>
+    <img src="{{ MEDIA_URL }}{{ object.photo }}"><br/>
+    <a href="{% url 'index' %}">Back</a>
+{% endblock %}
