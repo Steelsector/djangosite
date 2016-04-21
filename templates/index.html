@@ -32,7 +32,7 @@
                                     <figure class="effect-bubba">
                                         <img src="{{ MEDIA_URL }}{{ object.photo }}"/>
                                         <figcaption>
-                                            <h2><span>{{ object.name }}</span></h2>
+                                            <h2>{{ object.name }}</h2>
                                             <p>{% for skill in object.technologies.all %}{{ skill.name }}
                                                 , {% endfor %}</p>
                                         </figcaption>
