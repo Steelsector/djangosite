@@ -1,20 +1,158 @@
 {% extends 'base.html' %}
 {% load staticfiles bootstrap3 %}
 {% block content %}
-<section id="projects">
-    {% for object in projects %}
-        <a href="{% url 'project' object.pk %}">{{ object.name }}</a> - {{ object.technologies }} - <img src="{{ MEDIA_URL }}{{ object.photo }}"> <br>
-    {% endfor %}
-</section>
-<section id="skills">
-    {% for object in object_list %}
-        {{ object.name }} - {{ object.rate }} <br>
-    {% endfor %}
-</section>
-<section id="contact">
-    <form method="POST" action="{% url 'contact' %}">{% csrf_token %}
-        {% bootstrap_form form %}
-        <input type="submit">
-    </form>
-</section>
+
+    <section id="portfolio" class="pfblock">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-6 col-sm-offset-3">
+
+                    <div class="pfblock-header wow fadeInUp">
+                        <h2 class="pfblock-title">My works</h2>
+                        <div class="pfblock-line"></div>
+                        <div class="pfblock-subtitle">
+                            No one lights a lamp in order to hide it behind the door: the purpose of light is to create
+                            more light, to open people’s eyes, to reveal the marvels around.
+                        </div>
+                    </div>
+
+                </div>
+
+            </div><!-- .row -->
+
+
+            <div class="row">
+
+                {% for object in projects %}
+                    {% if object.linkto != 'SOME STRING' %}
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <a href="{{ object.linkto }}">
+                                <figure class="effect-bubba">
+                                    <img src="{{ MEDIA_URL }}{{ object.photo }}"/>
+                                    <figcaption>
+                                        <h2>{{ object.name }}</h2>
+                                        <p>{% for skill in object.technologies.all %}{{ skill.name }}, {% endfor %}</p>
+                                    </figcaption>
+                                </figure>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <figure class="effect-bubba">
+                                <img src="{{ MEDIA_URL }}{{ object.photo }}"/>
+                                <figcaption>
+                                    <h2>{{ object.name }}</h2>
+                                    <p>{% for skill in object.technologies.all %}{{ skill.name }}, {% endfor %}</p>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+
+            </div>
+
+
+        </div><!-- .contaier -->
+
+    </section>
+
+    <!-- Portfolio end -->
+
+    <!-- Skills start -->
+
+    <section class="pfblock pfblock-gray" id="skills">
+
+        <div class="container">
+
+            <div class="row skills">
+
+                <div class="row">
+
+                    <div class="col-sm-6 col-sm-offset-3">
+
+                        <div class="pfblock-header wow fadeInUp">
+                            <h2 class="pfblock-title">My Skills</h2>
+                            <div class="pfblock-line"></div>
+                            <div class="pfblock-subtitle">
+                                No one lights a lamp in order to hide it behind the door: the purpose of light is to
+                                create more light, to open people’s eyes, to reveal the marvels around.
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div><!-- .row -->
+                {% for object in object_list %}
+                    <div class="col-sm-6 col-md-3 text-center">
+                        <span data-percent="{{ object.rate }}" class="chart easyPieChart"
+                              style="width: 140px; height: 140px; line-height: 140px;">
+                            <span class="percent">{{ object.rate }}</span>
+                        </span>
+                        <h3 class="text-center">{{ object.name }}</h3>
+                    </div>
+                {% endfor %}
+
+            </div><!--End row -->
+
+        </div>
+
+    </section>
+
+    <!-- Skills end -->
+
+    <!-- Contact start -->
+
+	<section id="contact" class="pfblock">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-sm-6 col-sm-offset-3">
+
+					<div class="pfblock-header">
+						<h2 class="pfblock-title">Drop me a line</h2>
+						<div class="pfblock-line"></div>
+						<div class="pfblock-subtitle">
+							No one lights a lamp in order to hide it behind the door: the purpose of light is to create more light, to open people’s eyes, to reveal the marvels around.
+						</div>
+					</div>
+
+				</div>
+
+			</div><!-- .row -->
+
+			<div class="row">
+
+				<div class="col-sm-6 col-sm-offset-3">
+
+					<form id="contact-form" role="form"  method="POST" action="{% url 'contact' %}">{% csrf_token %}
+						<div class="ajax-hidden">
+                            {% bootstrap_form form %}
+							<!--<div class="form-group wow fadeInUp">
+								<label class="sr-only" for="c_name">Name</label>
+								<input type="text" id="c_name" class="form-control" name="c_name" placeholder="Name">
+							</div>
+
+							<div class="form-group wow fadeInUp" data-wow-delay=".1s">
+								<label class="sr-only" for="c_email">Email</label>
+								<input type="email" id="c_email" class="form-control" name="c_email" placeholder="E-mail">
+							</div>
+
+							<div class="form-group wow fadeInUp" data-wow-delay=".2s">
+								<textarea class="form-control" id="c_message" name="c_message" rows="7" placeholder="Message"></textarea>
+							</div>-->
+                            <input type="submit" class="btn btn-lg btn-block wow fadeInUp" data-wow-delay=".3s">
+							<!--<button type="submit" class="btn btn-lg btn-block wow fadeInUp" data-wow-delay=".3s">Send Message</button>-->
+						</div>
+						<div class="ajax-response"></div>
+					</form>
+
+				</div>
+
+			</div><!-- .row -->
+		</div><!-- .container -->
+	</section>
+
+	<!-- Contact end -->
 {% endblock %}
