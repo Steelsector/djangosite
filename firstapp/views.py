@@ -6,7 +6,7 @@ from django.views.generic import ListView, FormView, DetailView
 from django.core.mail import EmailMultiAlternatives
 from firstapp.forms import Contact
 from firstapp.models import Skill
-
+from django_slack import slack_message
 from firstapp.models import Project
 
 
@@ -32,14 +32,11 @@ class ContactMe(FormView):
     template_name = 'index.html'
 
     def form_valid(self, form):
-        subject = 'Emailed jött'
-        html_content = render_to_string('email_templates/contact.html', {
+
+        slack_message('my_message.slack', {
             'message': form.cleaned_data.get('contacter_message'),
             'name': form.cleaned_data.get('contacter_name'),
             'mail': form.cleaned_data.get('contacter_mail')
         })
-        text_content = strip_tags(html_content)
-        msg = EmailMultiAlternatives(subject, text_content, to=['info@bernathviktor.xyz'])
-        msg.attach_alternative(html_content, 'text/html')
-        msg.send()
+
         return super(ContactMe, self).form_valid(form)

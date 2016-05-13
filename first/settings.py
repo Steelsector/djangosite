@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'firstapp',
     'bootstrap3',
+    'django_slack',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -135,6 +136,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+SLACK_TOKEN = 'xoxp-36206047638-36220714641-42833986117-b096b20d22'
+SLACK_CHANNEL = '#joboffers'
+SLACK_USERNAME = 'ViktorJobBOT'
+SLACK_BACKEND = 'django_slack.backends.UrllibBackend'
 
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 if TESTING:

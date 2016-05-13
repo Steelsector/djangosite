@@ -1,0 +1,8 @@
+{% extends django_slack %}
+
+{% block text %}
+Viktor üzenet siteról
+Feladó neve: {{name}}
+Mailja: {{mail}}
+Üzenet: {{message}}
+{% endblock %}
